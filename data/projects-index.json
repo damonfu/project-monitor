@@ -1,5 +1,5 @@
 {
-  "lastScanTime": "2026-03-09T19:00:06.954Z",
+  "lastScanTime": "2026-03-10T19:00:03.481Z",
   "projects": [
     {
       "name": "ai-middleware",
@@ -13,7 +13,7 @@
       "isDirty": false,
       "status": "normal",
       "todayCommitCount": 5,
-      "weekCommitCount": 31,
+      "weekCommitCount": 36,
       "recentCommits": []
     },
     {
@@ -32,6 +32,36 @@
       "recentCommits": []
     },
     {
+      "name": "data",
+      "path": "/Users/inman/Codes/project-monitor/data",
+      "remote": "git@github.com:damonfu/project-monitor.git",
+      "branch": "main",
+      "lastCommitTime": null,
+      "lastCommitHash": null,
+      "lastCommitMessage": null,
+      "hasChangesToday": false,
+      "isDirty": true,
+      "status": "dirty",
+      "todayCommitCount": 3,
+      "weekCommitCount": 3,
+      "recentCommits": []
+    },
+    {
+      "name": "docs",
+      "path": "/Users/inman/Codes/project-monitor/docs",
+      "remote": "git@github.com:damonfu/project-monitor.git",
+      "branch": "main",
+      "lastCommitTime": null,
+      "lastCommitHash": null,
+      "lastCommitMessage": null,
+      "hasChangesToday": false,
+      "isDirty": true,
+      "status": "dirty",
+      "todayCommitCount": 3,
+      "weekCommitCount": 3,
+      "recentCommits": []
+    },
+    {
       "name": "go-todo-app",
       "path": "/Users/inman/Codes/gitee/go-todo-app",
       "remote": "git@gitee.com:gaocang/go-todo-app.git",
@@ -40,9 +70,9 @@
       "lastCommitHash": null,
       "lastCommitMessage": null,
       "hasChangesToday": false,
-      "isDirty": false,
-      "status": "normal",
-      "todayCommitCount": 0,
+      "isDirty": true,
+      "status": "dirty",
+      "todayCommitCount": 1,
       "weekCommitCount": 18,
       "recentCommits": []
     },
@@ -77,9 +107,9 @@
       "recentCommits": []
     },
     {
-      "name": "web",
-      "path": "/Users/inman/Codes/project-monitor/web",
-      "remote": "",
+      "name": "project-monitor",
+      "path": "/Users/inman/Codes/project-monitor",
+      "remote": "git@github.com:damonfu/project-monitor.git",
       "branch": "main",
       "lastCommitTime": null,
       "lastCommitHash": null,
@@ -87,11 +117,71 @@
       "hasChangesToday": false,
       "isDirty": true,
       "status": "dirty",
-      "todayCommitCount": 0,
-      "weekCommitCount": 2,
+      "todayCommitCount": 3,
+      "weekCommitCount": 3,
+      "recentCommits": []
+    },
+    {
+      "name": "reports",
+      "path": "/Users/inman/Codes/project-monitor/reports",
+      "remote": "git@github.com:damonfu/project-monitor.git",
+      "branch": "main",
+      "lastCommitTime": null,
+      "lastCommitHash": null,
+      "lastCommitMessage": null,
+      "hasChangesToday": false,
+      "isDirty": true,
+      "status": "dirty",
+      "todayCommitCount": 3,
+      "weekCommitCount": 3,
+      "recentCommits": []
+    },
+    {
+      "name": "scripts",
+      "path": "/Users/inman/Codes/project-monitor/scripts",
+      "remote": "git@github.com:damonfu/project-monitor.git",
+      "branch": "main",
+      "lastCommitTime": null,
+      "lastCommitHash": null,
+      "lastCommitMessage": null,
+      "hasChangesToday": false,
+      "isDirty": true,
+      "status": "dirty",
+      "todayCommitCount": 3,
+      "weekCommitCount": 3,
+      "recentCommits": []
+    },
+    {
+      "name": "web",
+      "path": "/Users/inman/Codes/project-monitor/web",
+      "remote": "git@github.com:damonfu/project-monitor.git",
+      "branch": "main",
+      "lastCommitTime": null,
+      "lastCommitHash": null,
+      "lastCommitMessage": null,
+      "hasChangesToday": false,
+      "isDirty": true,
+      "status": "dirty",
+      "todayCommitCount": 3,
+      "weekCommitCount": 3,
+      "recentCommits": []
+    },
+    {
+      "name": "worker",
+      "path": "/Users/inman/Codes/project-monitor/worker",
+      "remote": "git@github.com:damonfu/project-monitor.git",
+      "branch": "main",
+      "lastCommitTime": null,
+      "lastCommitHash": null,
+      "lastCommitMessage": null,
+      "hasChangesToday": false,
+      "isDirty": true,
+      "status": "dirty",
+      "todayCommitCount": 3,
+      "weekCommitCount": 3,
       "recentCommits": []
     }
   ],
-  "scanDuration": 885,
+  "scanDuration": 1393,
   "scanPath": "/Users/inman/Codes"
 }

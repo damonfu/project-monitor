@@ -175,13 +175,13 @@ export async function fetchAlerts(): Promise<{ alerts: Alert[]; total: number }>
   };
 }
 
-// Dismiss an alert
+// Dismiss an alert (mark as ignored)
 export async function dismissAlert(id: string): Promise<void> {
-  const response = await fetch(`${API_BASE}/api/alerts/${id}/dismiss`, {
+  const response = await fetch(`${API_BASE}/api/alerts/${id}/ignore`, {
     method: 'POST',
   });
   if (!response.ok) {
-    throw new Error(`Failed to dismiss alert: ${response.status}`);
+    throw new Error(`Failed to ignore alert: ${response.status}`);
   }
 }
 

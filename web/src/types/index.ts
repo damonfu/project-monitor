@@ -25,8 +25,8 @@ export interface Project {
   ciInfo?: CIInfo;
 }
 
-export type AlertType = 'error' | 'warning' | 'info' | 'inactive';
-export type AlertStatus = 'new' | 'read' | 'dismissed' | 'active' | 'acknowledged' | 'ignored';
+export type AlertType = 'error' | 'warning' | 'info' | 'inactive' | 'uncommitted';
+export type AlertStatus = 'active' | 'acknowledged' | 'ignored';
 
 export interface Alert {
   id: string;

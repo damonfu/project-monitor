@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
-import type { Alert, AlertStatus, AlertType } from '../types';
-import { acknowledgeAlert, dismissAlert, reactivateAlert, fetchAlerts } from '../services/api';
+import { Link } from 'react-router-dom';
+import type { Alert } from '../types';
+import { acknowledgeAlert, dismissAlert, fetchAlerts } from '../services/api';
 
 export function Alerts() {
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [filterStatus, setFilterStatus] = useState<AlertStatus | 'all'>('all');
-  const [filterType, setFilterType] = useState<AlertType | 'all'>('all');
+  const [filterStatus, setFilterStatus] = useState<'all' | 'active' | 'acknowledged' | 'ignored'>('all');
+  const [filterType, setFilterType] = useState<'all' | 'uncommitted' | 'inactive'>('all');
   const [filterProject, setFilterProject] = useState<string>('all');
 
   useEffect(() => {
@@ -31,15 +32,13 @@ export function Alerts() {
   // Extract unique project names from alerts for filtering
   const projectNames = [...new Set(alerts.map(a => a.projectName))];
 
-  const handleStatusChange = async (id: string, newStatus: AlertStatus | string) => {
+  const handleStatusChange = async (id: string, newStatus: 'active' | 'acknowledged' | 'ignored') => {
     // Call API based on the new status
     try {
-      if (newStatus === 'read') {
+      if (newStatus === 'acknowledged') {
         await acknowledgeAlert(id);
-      } else if (newStatus === 'dismissed') {
+      } else if (newStatus === 'ignored') {
         await dismissAlert(id);
-      } else if (newStatus === 'new') {
-        await reactivateAlert(id);
       }
       
       // Update local state after API call succeeds
@@ -59,21 +58,16 @@ export function Alerts() {
     return statusMatch && typeMatch && projectMatch;
   });
 
-  const getTypeStyle = (type: AlertType | string) => {
+  const getTypeStyle = (type: string) => {
     switch (type) {
-      case 'error': return 'bg-red-100 text-red-800 border-red-200';
-      case 'warning': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'info': return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'uncommitted': return 'bg-orange-100 text-orange-800 border-orange-200';
       case 'inactive': return 'bg-gray-100 text-gray-800 border-gray-200';
       default: return 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
 
-  const getStatusLabel = (status: AlertStatus | string) => {
+  const getStatusLabel = (status: string) => {
     switch (status) {
-      case 'new': return '新告警';
-      case 'read': return '已读';
-      case 'dismissed': return '已忽略';
       case 'active': return '活跃';
       case 'acknowledged': return '已确认';
       case 'ignored': return '已忽略';
@@ -81,11 +75,9 @@ export function Alerts() {
     }
   };
 
-  const getTypeLabel = (type: AlertType | string) => {
+  const getTypeLabel = (type: string) => {
     switch (type) {
-      case 'error': return '错误';
-      case 'warning': return '警告';
-      case 'info': return '信息';
+      case 'uncommitted': return '未提交';
       case 'inactive': return '长期无活动';
       default: return type;
     }
@@ -141,9 +133,9 @@ export function Alerts() {
             className="rounded-md border-gray-300 py-1.5 pl-3 pr-10 text-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
           >
             <option value="all">所有状态</option>
-            <option value="new">新告警</option>
-            <option value="read">已读</option>
-            <option value="dismissed">已忽略</option>
+            <option value="active">活跃</option>
+            <option value="acknowledged">已确认</option>
+            <option value="ignored">已忽略</option>
           </select>
 
           <select 
@@ -152,9 +144,8 @@ export function Alerts() {
             className="rounded-md border-gray-300 py-1.5 pl-3 pr-10 text-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
           >
             <option value="all">所有类型</option>
-            <option value="error">错误</option>
-            <option value="warning">警告</option>
-            <option value="info">信息</option>
+            <option value="uncommitted">未提交</option>
+            <option value="inactive">长期无活动</option>
           </select>
 
           <select 
@@ -174,7 +165,7 @@ export function Alerts() {
         <ul className="divide-y divide-gray-200">
           {filteredAlerts.length > 0 ? (
             filteredAlerts.map((alert) => (
-              <li key={alert.id} className={`${alert.status === 'new' ? 'bg-indigo-50/30' : ''} hover:bg-gray-50 transition-colors`}>
+              <li key={alert.id} className={`${alert.status === 'active' ? 'bg-red-50/30' : ''} hover:bg-gray-50 transition-colors`}>
                 <div className="px-4 py-5 sm:px-6">
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center space-x-3">
@@ -182,6 +173,16 @@ export function Alerts() {
                         {getTypeLabel(alert.type)}
                       </span>
                       <span className="text-sm font-semibold text-gray-900">{alert.projectName}</span>
+                      {alert.severity === 'critical' && (
+                        <span className="px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-700 border border-red-200">
+                          严重
+                        </span>
+                      )}
+                      {alert.severity === 'warning' && (
+                        <span className="px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-700 border border-yellow-200">
+                          警告
+                        </span>
+                      )}
                     </div>
                     <time className="text-xs text-gray-500">{formatDate(alert.timestamp || alert.createdAt || '')}</time>
                   </div>
@@ -190,8 +191,8 @@ export function Alerts() {
                       <p className="text-sm text-gray-600 mb-4">{alert.message}</p>
                       <div className="flex items-center space-x-2">
                         <span className={`text-xs px-2 py-0.5 rounded ${
-                          alert.status === 'new' ? 'bg-blue-50 text-blue-600' : 
-                          alert.status === 'read' ? 'bg-gray-100 text-gray-600' : 
+                          alert.status === 'active' ? 'bg-red-50 text-red-600' : 
+                          alert.status === 'acknowledged' ? 'bg-blue-50 text-blue-600' : 
                           'bg-gray-100 text-gray-400 line-through'
                         }`}>
                           {getStatusLabel(alert.status)}
@@ -199,30 +200,44 @@ export function Alerts() {
                       </div>
                     </div>
                     <div className="flex flex-shrink-0 items-center space-x-2">
-                      {alert.status === 'new' && (
-                        <button
-                          onClick={() => handleStatusChange(alert.id, 'read')}
-                          className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200"
-                        >
-                          标记已读
-                        </button>
+                      {alert.status === 'active' && (
+                        <>
+                          <button
+                            onClick={() => handleStatusChange(alert.id, 'acknowledged')}
+                            className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200"
+                          >
+                            确认
+                          </button>
+                          <button
+                            onClick={() => handleStatusChange(alert.id, 'ignored')}
+                            className="inline-flex items-center px-3 py-1.5 border border-gray-300 text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50"
+                          >
+                            忽略
+                          </button>
+                        </>
                       )}
-                      {alert.status !== 'dismissed' && (
+                      {alert.status === 'acknowledged' && (
                         <button
-                          onClick={() => handleStatusChange(alert.id, 'dismissed')}
+                          onClick={() => handleStatusChange(alert.id, 'ignored')}
                           className="inline-flex items-center px-3 py-1.5 border border-gray-300 text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50"
                         >
                           忽略
                         </button>
                       )}
-                      {alert.status === 'dismissed' && (
+                      {alert.status === 'ignored' && (
                         <button
-                          onClick={() => handleStatusChange(alert.id, 'new')}
+                          onClick={() => handleStatusChange(alert.id, 'acknowledged')}
                           className="inline-flex items-center px-3 py-1.5 border border-gray-300 text-xs font-medium rounded text-gray-600 bg-white hover:bg-gray-50"
                         >
-                          重新开启
+                          重新确认
                         </button>
                       )}
+                      <Link
+                        to={`/project/${encodeURIComponent(alert.projectName)}`}
+                        className="inline-flex items-center px-3 py-1.5 border border-gray-300 text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50"
+                      >
+                        查看项目
+                      </Link>
                     </div>
                   </div>
                 </div>
