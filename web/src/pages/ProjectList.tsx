@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchProjects } from '../services/api';
 import { StatCard } from '../components/StatCard';
@@ -6,6 +6,9 @@ import { StatusBadge } from '../components/StatusBadge';
 import type { Project, ProjectsIndex } from '../types';
 
 type GroupBy = 'recent' | 'status';
+
+// 自动刷新间隔（60秒）
+const AUTO_REFRESH_INTERVAL = 60000;
 
 function formatTime(isoString: string): string {
   const date = new Date(isoString);
@@ -17,6 +20,15 @@ function formatTime(isoString: string): string {
   if (minutes < 60) return `${minutes}分钟前`;
   if (hours < 24) return `${hours}小时前`;
   return date.toLocaleDateString('zh-CN');
+}
+
+// 格式化时间为 HH:MM:SS
+function formatRefreshTime(date: Date): string {
+  return date.toLocaleTimeString('zh-CN', { 
+    hour: '2-digit', 
+    minute: '2-digit', 
+    second: '2-digit' 
+  });
 }
 
 export function ProjectList() {
@@ -31,25 +43,70 @@ export function ProjectList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
+  const [lastRefreshTime, setLastRefreshTime] = useState<Date | null>(null);
+  const [isOnline, setIsOnline] = useState(true);
 
-  const loadData = async (isRefresh = false) => {
+  // 检测网络状态
+  useEffect(() => {
+    setIsOnline(navigator.onLine);
+    
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => {
+      setIsOnline(false);
+      setError('网络已断开，请检查网络连接');
+    };
+    
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
+
+  const loadData = useCallback(async (isRefresh = false) => {
+    // 网络断开时不发起请求
+    if (!navigator.onLine) {
+      setError('网络已断开，请检查网络连接');
+      return;
+    }
+    
     try {
       if (isRefresh) setRefreshing(true);
       else setLoading(true);
       setError(null);
       const result = await fetchProjects();
       setData(result);
+      setLastRefreshTime(new Date());
     } catch (err) {
-      setError(err instanceof Error ? err.message : '加载数据失败');
+      const errorMsg = err instanceof Error ? err.message : '加载数据失败';
+      setError(navigator.onLine ? errorMsg : '网络已断开，请检查网络连接');
     } finally {
       setLoading(false);
       setRefreshing(false);
     }
-  };
+  }, []);
 
+  // 初始加载数据
   useEffect(() => {
     loadData();
-  }, []);
+  }, [loadData]);
+
+  // 自动刷新机制
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (navigator.onLine && !refreshing) {
+        loadData(true);
+      }
+    }, AUTO_REFRESH_INTERVAL);
+    
+    return () => clearInterval(intervalId);
+  }, [loadData, refreshing]);
+
+  useEffect(() => {
+    localStorage.setItem('project-monitor-favorites', JSON.stringify(favorites));
+  }, [favorites]);
 
   useEffect(() => {
     localStorage.setItem('project-monitor-favorites', JSON.stringify(favorites));
@@ -249,6 +306,16 @@ export function ProjectList() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* 离线提示横幅 */}
+      {!isOnline && (
+        <div className="bg-yellow-50 border-b border-yellow-200 px-4 py-2 flex items-center justify-center">
+          <svg className="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636a9 9 0 010 12.728m0 0l-2.829-2.829m2.829 2.829L21 21M15.536 8.464a5 5 0 010 7.072m0 0l-2.829-2.829m-4.243 2.829a4.978 4.978 0 01-1.414-2.83m-1.414 5.658a9 9 0 01-2.167-9.238m7.824 2.167a1 1 0 111.414 1.414m-1.414-1.414L3 3m8.293 8.293l1.414 1.414" />
+          </svg>
+          <span className="text-sm text-yellow-800">网络已断开，显示可能不是最新数据</span>
+        </div>
+      )}
+
       {/* 顶部区域 */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -256,19 +323,30 @@ export function ProjectList() {
             <div>
               <h1 className="text-2xl font-bold text-gray-900">项目总览</h1>
               <p className="text-sm text-gray-500 mt-1">
-                最近更新: {new Date(data.lastScanTime).toLocaleString('zh-CN')}
+                {lastRefreshTime ? (
+                  <>最后刷新: {formatRefreshTime(lastRefreshTime)} · 扫描时间: {new Date(data.lastScanTime).toLocaleString('zh-CN')}</>
+                ) : (
+                  <>最近更新: {new Date(data.lastScanTime).toLocaleString('zh-CN')}</>
+                )}
               </p>
             </div>
-            <button
-              onClick={handleRefresh}
-              disabled={refreshing}
-              className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
-            >
-              <svg className={`w-4 h-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
-              {refreshing ? '刷新中...' : '刷新'}
-            </button>
+            <div className="flex items-center space-x-3">
+              {/* 自动刷新状态指示 */}
+              <span className="text-xs text-gray-500 hidden sm:inline">
+                自动刷新中
+              </span>
+              <button
+                onClick={handleRefresh}
+                disabled={refreshing || !isOnline}
+                className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                title={!isOnline ? '网络已断开' : '手动刷新数据'}
+              >
+                <svg className={`w-4 h-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                {refreshing ? '刷新中...' : '刷新'}
+              </button>
+            </div>
           </div>
         </div>
       </div>

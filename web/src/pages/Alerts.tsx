@@ -1,7 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import type { Alert } from '../types';
 import { acknowledgeAlert, dismissAlert, fetchAlerts } from '../services/api';
+
+// 自动刷新间隔（60秒）
+const AUTO_REFRESH_INTERVAL = 60000;
+
+// 格式化刷新时间
+function formatRefreshTime(date: Date): string {
+  return date.toLocaleTimeString('zh-CN', { 
+    hour: '2-digit', 
+    minute: '2-digit', 
+    second: '2-digit' 
+  });
+}
 
 export function Alerts() {
   const [alerts, setAlerts] = useState<Alert[]>([]);
@@ -10,24 +22,63 @@ export function Alerts() {
   const [filterStatus, setFilterStatus] = useState<'all' | 'active' | 'acknowledged' | 'ignored'>('all');
   const [filterType, setFilterType] = useState<'all' | 'uncommitted' | 'inactive'>('all');
   const [filterProject, setFilterProject] = useState<string>('all');
+  const [lastRefreshTime, setLastRefreshTime] = useState<Date | null>(null);
+  const [isOnline, setIsOnline] = useState(true);
 
+  // 检测网络状态
   useEffect(() => {
-    loadAlerts();
+    setIsOnline(navigator.onLine);
+    
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => {
+      setIsOnline(false);
+      setError('网络已断开，请检查网络连接');
+    };
+    
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
   }, []);
 
-  const loadAlerts = async () => {
+  const loadAlerts = useCallback(async () => {
+    // 网络断开时不发起请求
+    if (!navigator.onLine) {
+      setError('网络已断开，请检查网络连接');
+      return;
+    }
+    
     try {
       setLoading(true);
       const result = await fetchAlerts();
       setAlerts(result.alerts || []);
       setError(null);
+      setLastRefreshTime(new Date());
     } catch (err) {
       console.error('Failed to fetch alerts:', err);
-      setError('加载告警失败');
+      setError(navigator.onLine ? '加载告警失败' : '网络已断开，请检查网络连接');
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    loadAlerts();
+  }, [loadAlerts]);
+
+  // 自动刷新机制
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (navigator.onLine) {
+        loadAlerts();
+      }
+    }, AUTO_REFRESH_INTERVAL);
+    
+    return () => clearInterval(intervalId);
+  }, [loadAlerts]);
 
   // Extract unique project names from alerts for filtering
   const projectNames = [...new Set(alerts.map(a => a.projectName))];
@@ -123,10 +174,43 @@ export function Alerts() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* 离线提示横幅 */}
+      {!isOnline && (
+        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4 flex items-center justify-center">
+          <svg className="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636a9 9 0 010 12.728m0 0l-2.829-2.829m2.829 2.829L21 21M15.536 8.464a5 5 0 010 7.072m0 0l-2.829-2.829m-4.243 2.829a4.978 4.978 0 01-1.414-2.83m-1.414 5.658a9 9 0 01-2.167-9.238m7.824 2.167a1 1 0 111.414 1.414m-1.414-1.414L3 3m8.293 8.293l1.414 1.414" />
+          </svg>
+          <span className="text-sm text-yellow-800">网络已断开，显示可能不是最新数据</span>
+        </div>
+      )}
+
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">告警中心</h1>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">告警中心</h1>
+          {lastRefreshTime && (
+            <p className="text-sm text-gray-500 mt-1">
+              最后刷新: {formatRefreshTime(lastRefreshTime)}
+            </p>
+          )}
+        </div>
         
         <div className="flex flex-wrap items-center gap-3">
+          {/* 自动刷新状态指示 */}
+          <span className="text-xs text-gray-500">
+            自动刷新中
+          </span>
+          
+          <button
+            onClick={loadAlerts}
+            disabled={loading || !isOnline}
+            className="inline-flex items-center px-3 py-1.5 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            title={!isOnline ? '网络已断开' : '手动刷新'}
+          >
+            <svg className={`w-4 h-4 mr-1.5 ${loading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            刷新
+          </button>
           <select 
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value as any)}
