@@ -1,0 +1,166 @@
+name: Project Monitor Automation
+
+on:
+  # 定时触发：每天 9:00 和 21:00
+  schedule:
+    - cron: '0 1 * * *'   # 09:00 UTC = 17:00 CST
+    - cron: '0 13 * * *'  # 21:00 UTC = 05:00 CST
+  
+  # 手动触发
+  workflow_dispatch:
+    inputs:
+      scan_only:
+        description: '只扫描不部署'
+        required: false
+        default: 'false'
+        type: boolean
+
+  # push 到 main 分支时触发
+  push:
+    branches:
+      - main
+    paths:
+      - 'scripts/**'
+      - 'data/**'
+      - 'worker/**'
+      - '.github/workflows/**'
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    outputs:
+      scan_time: ${{ steps.scan.outputs.scan_time }}
+      project_count: ${{ steps.scan.outputs.project_count }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install global dependencies
+        run: npm install -g tsx
+
+      - name: Scan projects
+        id: scan
+        run: |
+          # 运行扫描脚本（从项目根目录）
+          tsx scripts/scan-projects.ts
+          
+          # 输出扫描时间
+          echo "scan_time=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
+          echo "project_count=$(cat data/projects-index.json | grep -o '"name"' | wc -l)" >> $GITHUB_OUTPUT
+
+      - name: Generate snapshot
+        run: tsx scripts/generate-snapshot.ts
+
+      - name: Generate daily report
+        run: tsx scripts/generate-report.ts
+
+      - name: Sync to Worker
+        env:
+          WORKER_URL: https://project-monitor-api.inmanfu.workers.dev
+          SCAN_TOKEN: ${{ secrets.SCAN_TOKEN }}
+        run: |
+          tsx scripts/sync-to-worker.ts
+
+      - name: Upload scan artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: scan-results
+          path: |
+            data/
+            reports/
+          retention-days: 7
+
+  deploy-worker:
+    needs: scan
+    runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_dispatch' || github.event.inputs.scan_only != 'true'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: worker/package-lock.json
+
+      - name: Install dependencies
+        working-directory: worker
+        run: npm ci
+
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy --env production
+
+  deploy-frontend:
+    needs: scan
+    runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_dispatch' || github.event.inputs.scan_only != 'true'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install dependencies
+        working-directory: web
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: web
+        run: npm run build
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: project-monitor
+          directory: web/dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+  notify:
+    needs: [scan, deploy-worker, deploy-frontend]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: Download scan results
+        uses: actions/download-artifact@v4
+        with:
+          name: scan-results
+
+      - name: Summary
+        run: |
+          echo "## 📊 Project Monitor 扫描报告" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- 扫描时间: ${{ needs.scan.outputs.scan_time }}" >> $GITHUB_STEP_SUMMARY
+          echo "- 项目数量: ${{ needs.scan.outputs.project_count }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          echo "## 🚀 部署状态" >> $GITHUB_STEP_SUMMARY
+          echo "- Worker: ${{ needs.deploy-worker.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Frontend: ${{ needs.deploy-frontend.result }}" >> $GITHUB_STEP_SUMMARY
