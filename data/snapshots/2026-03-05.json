@@ -1,0 +1,184 @@
+{
+  "date": "2026-03-05",
+  "generatedAt": "2026-03-05T01:56:42.527Z",
+  "projects": [
+    {
+      "name": "ai-middleware",
+      "path": "/Users/inman/Codes/gitee/ai-middleware",
+      "branch": "master",
+      "status": "clean",
+      "lastCommitTime": null,
+      "commits": [],
+      "fileChanges": [],
+      "stats": {
+        "commitsToday": 0,
+        "filesModified": 0,
+        "filesAdded": 0,
+        "filesDeleted": 0
+      }
+    },
+    {
+      "name": "code-server",
+      "path": "/Users/inman/Codes/older/code-server",
+      "branch": "user",
+      "status": "dirty",
+      "lastCommitTime": null,
+      "commits": [],
+      "fileChanges": [
+        {
+          "status": "??",
+          "file": "go-app/"
+        }
+      ],
+      "stats": {
+        "commitsToday": 0,
+        "filesModified": 0,
+        "filesAdded": 0,
+        "filesDeleted": 0
+      }
+    },
+    {
+      "name": "go-todo-app",
+      "path": "/Users/inman/Codes/gitee/go-todo-app",
+      "branch": "main",
+      "status": "dirty",
+      "lastCommitTime": null,
+      "commits": [],
+      "fileChanges": [
+        {
+          "status": "M",
+          "file": "common/pkg/cache/redis.go"
+        },
+        {
+          "status": "?",
+          "file": "M common/pkg/contract/application.go"
+        },
+        {
+          "status": "?",
+          "file": "M services/admin"
+        },
+        {
+          "status": "?",
+          "file": "M services/user"
+        },
+        {
+          "status": "?",
+          "file": "M web/admin-ui"
+        },
+        {
+          "status": "??",
+          "file": "docs/OPERATIONS.md"
+        },
+        {
+          "status": "??",
+          "file": "docs/QUICK_REFERENCE.md"
+        }
+      ],
+      "stats": {
+        "commitsToday": 0,
+        "filesModified": 1,
+        "filesAdded": 4,
+        "filesDeleted": 0
+      }
+    },
+    {
+      "name": "login-page",
+      "path": "/Users/inman/Codes/github/login-page",
+      "branch": "main",
+      "status": "dirty",
+      "lastCommitTime": null,
+      "commits": [],
+      "fileChanges": [
+        {
+          "status": "D",
+          "file": "dist/assets/index-DfAubTRp.css"
+        },
+        {
+          "status": "?",
+          "file": "D dist/assets/index-PPErvW3c.js"
+        },
+        {
+          "status": "?",
+          "file": "D dist/assets/index-PPErvW3c.js.map"
+        },
+        {
+          "status": "?",
+          "file": "M dist/index.html"
+        },
+        {
+          "status": "?",
+          "file": "M src/App.tsx"
+        },
+        {
+          "status": "?",
+          "file": "M src/components/LoginForm.tsx"
+        },
+        {
+          "status": "??",
+          "file": "dist/assets/index-BM4mroGs.js"
+        },
+        {
+          "status": "??",
+          "file": "dist/assets/index-BM4mroGs.js.map"
+        },
+        {
+          "status": "??",
+          "file": "dist/assets/index-C1MXTOUH.css"
+        }
+      ],
+      "stats": {
+        "commitsToday": 0,
+        "filesModified": 0,
+        "filesAdded": 5,
+        "filesDeleted": 1
+      }
+    },
+    {
+      "name": "product-showcase",
+      "path": "/Users/inman/Codes/github/product-showcase",
+      "branch": "main",
+      "status": "clean",
+      "lastCommitTime": null,
+      "commits": [],
+      "fileChanges": [],
+      "stats": {
+        "commitsToday": 0,
+        "filesModified": 0,
+        "filesAdded": 0,
+        "filesDeleted": 0
+      }
+    },
+    {
+      "name": "web",
+      "path": "/Users/inman/Codes/project-monitor/web",
+      "branch": "main",
+      "status": "dirty",
+      "lastCommitTime": null,
+      "commits": [],
+      "fileChanges": [
+        {
+          "status": "M",
+          "file": "src/pages/Alerts.tsx"
+        },
+        {
+          "status": "?",
+          "file": "M src/pages/ProjectList.tsx"
+        },
+        {
+          "status": "?",
+          "file": "M src/pages/ReportDetail.tsx"
+        },
+        {
+          "status": "?",
+          "file": "M src/types/index.ts"
+        }
+      ],
+      "stats": {
+        "commitsToday": 0,
+        "filesModified": 1,
+        "filesAdded": 3,
+        "filesDeleted": 0
+      }
+    }
+  ]
+}

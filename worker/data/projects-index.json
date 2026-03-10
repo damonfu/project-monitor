@@ -1,0 +1,249 @@
+{
+  "projects": [
+    {
+      "name": "ai-middleware",
+      "path": "/Users/inman/Codes/gitee/ai-middleware",
+      "branch": "master",
+      "lastCommitTime": "2026-03-05 10:20:08 +0800",
+      "status": "clean",
+      "recentCommits": [
+        {
+          "hash": "096ae31",
+          "author": "fujianguo",
+          "date": "2026-03-05 10:20:08 +0800",
+          "message": "优化会话全历史拼接的缓存与增量回补",
+          "filesChanged": 3
+        },
+        {
+          "hash": "362a407",
+          "author": "fujianguo",
+          "date": "2026-03-04 16:39:06 +0800",
+          "message": "部署脚本支持自动检查并执行数据库迁移",
+          "filesChanged": 1
+        },
+        {
+          "hash": "5da92b9",
+          "author": "fujianguo",
+          "date": "2026-03-04 16:22:30 +0800",
+          "message": "修复会话日志模型按轮次记录与展示",
+          "filesChanged": 7
+        },
+        {
+          "hash": "6b2946e",
+          "author": "fujianguo",
+          "date": "2026-03-04 15:49:19 +0800",
+          "message": "修复模型切换缓存匹配并更新playground说明",
+          "filesChanged": 8
+        },
+        {
+          "hash": "e5d6f5f",
+          "author": "fujianguo",
+          "date": "2026-03-04 14:49:56 +0800",
+          "message": "补齐自动化测试并修复兼容性",
+          "filesChanged": 7
+        },
+        {
+          "hash": "5281646",
+          "author": "fujianguo",
+          "date": "2026-03-04 14:22:00 +0800",
+          "message": "完善chat/completions会话参数覆盖并增强cleanup内网限制",
+          "filesChanged": 7
+        },
+        {
+          "hash": "7f3c27b",
+          "author": "fujianguo",
+          "date": "2026-03-04 12:58:53 +0800",
+          "message": "feat: 重构chat/completions参数并升级playground模型切换",
+          "filesChanged": 12
+        },
+        {
+          "hash": "32bf4f9",
+          "author": "fujianguo",
+          "date": "2026-03-04 10:44:53 +0800",
+          "message": "chat/completions优化&增加session会话管理",
+          "filesChanged": 5
+        }
+      ]
+    },
+    {
+      "name": "code-server",
+      "path": "/Users/inman/Codes/older/code-server",
+      "branch": "user",
+      "lastCommitTime": "2025-12-10 14:02:23 +0800",
+      "status": "dirty",
+      "recentCommits": [
+        {
+          "hash": "8e34573",
+          "author": "fujianguo",
+          "date": "2025-12-10 14:02:23 +0800",
+          "message": "优化代码",
+          "filesChanged": 3
+        },
+        {
+          "hash": "4d66564",
+          "author": "fujianguo",
+          "date": "2025-12-09 14:37:10 +0800",
+          "message": "优化代码",
+          "filesChanged": 3
+        },
+        {
+          "hash": "73296e5",
+          "author": "fujianguo",
+          "date": "2025-12-05 20:44:52 +0800",
+          "message": "完成优化",
+          "filesChanged": 1
+        },
+        {
+          "hash": "4f27e9f",
+          "author": "fujianguo",
+          "date": "2025-12-04 22:13:21 +0800",
+          "message": "完成游客优化",
+          "filesChanged": 2
+        },
+        {
+          "hash": "07dc110",
+          "author": "fujianguo",
+          "date": "2025-12-04 17:09:42 +0800",
+          "message": "优化代码",
+          "filesChanged": 4
+        }
+      ]
+    },
+    {
+      "name": "go-todo-app",
+      "path": "/Users/inman/Codes/gitee/go-todo-app",
+      "branch": "main",
+      "lastCommitTime": "2026-03-02 10:57:45 +0800",
+      "status": "dirty",
+      "recentCommits": [
+        {
+          "hash": "1840f73",
+          "author": "fujianguo",
+          "date": "2026-03-02 10:57:45 +0800",
+          "message": "增加用户&配置管理",
+          "filesChanged": 7
+        },
+        {
+          "hash": "e70661b",
+          "author": "fujianguo",
+          "date": "2026-02-27 15:55:43 +0800",
+          "message": "自动部署user路由路径",
+          "filesChanged": 1
+        },
+        {
+          "hash": "3756bd6",
+          "author": "fujianguo",
+          "date": "2026-02-27 10:28:27 +0800",
+          "message": "优化编译脚本",
+          "filesChanged": 3
+        },
+        {
+          "hash": "47643d6",
+          "author": "fujianguo",
+          "date": "2026-02-24 11:38:13 +0800",
+          "message": "修复测试邮件弹窗",
+          "filesChanged": 1
+        },
+        {
+          "hash": "78e62f7",
+          "author": "fujianguo",
+          "date": "2026-02-24 11:26:15 +0800",
+          "message": "  - P2: Gateway handler 拆分、签名中间件去重、context key 类型安全",
+          "filesChanged": 5
+        }
+      ]
+    },
+    {
+      "name": "login-page",
+      "path": "/Users/inman/Codes/github/login-page",
+      "branch": "main",
+      "lastCommitTime": "2026-03-03 10:17:03 +0800",
+      "status": "dirty",
+      "recentCommits": [
+        {
+          "hash": "c350964",
+          "author": "fujianguo",
+          "date": "2026-03-03 10:17:03 +0800",
+          "message": "feat: redesign with clean tech style - light theme, glass morphism, blue accent",
+          "filesChanged": 13
+        },
+        {
+          "hash": "d3d31e1",
+          "author": "fujianguo",
+          "date": "2026-03-03 09:59:39 +0800",
+          "message": "feat: initial login page implementation",
+          "filesChanged": 0
+        }
+      ]
+    },
+    {
+      "name": "product-showcase",
+      "path": "/Users/inman/Codes/github/product-showcase",
+      "branch": "main",
+      "lastCommitTime": "2026-02-27 16:48:56 +0800",
+      "status": "clean",
+      "recentCommits": [
+        {
+          "hash": "83221fc",
+          "author": "fujianguo",
+          "date": "2026-02-27 16:48:56 +0800",
+          "message": "fix: 为访问计数 API 增加 CORS 支持",
+          "filesChanged": 2
+        },
+        {
+          "hash": "63f349e",
+          "author": "fujianguo",
+          "date": "2026-02-27 16:38:56 +0800",
+          "message": "feat: 页面显示 total_visits 计数",
+          "filesChanged": 3
+        },
+        {
+          "hash": "40231ff",
+          "author": "fujianguo",
+          "date": "2026-02-27 16:31:39 +0800",
+          "message": "ci: 拆分 Cloudflare 部署为双 Job",
+          "filesChanged": 1
+        },
+        {
+          "hash": "b2e392a",
+          "author": "fujianguo",
+          "date": "2026-02-27 15:57:56 +0800",
+          "message": "fix: 清理 wrangler 部署残留配置",
+          "filesChanged": 1
+        },
+        {
+          "hash": "2328019",
+          "author": "fujianguo",
+          "date": "2026-02-27 15:33:38 +0800",
+          "message": "fix: 修复 workflow 使用 variables",
+          "filesChanged": 1
+        }
+      ]
+    },
+    {
+      "name": "web",
+      "path": "/Users/inman/Codes/project-monitor/web",
+      "branch": "main",
+      "lastCommitTime": "2026-03-04 21:44:28 +0800",
+      "status": "dirty",
+      "recentCommits": [
+        {
+          "hash": "004a034",
+          "author": "fujianguo",
+          "date": "2026-03-04 21:44:28 +0800",
+          "message": "fix: add defensive programming for API responses and component data access",
+          "filesChanged": 3
+        },
+        {
+          "hash": "191e805",
+          "author": "fujianguo",
+          "date": "2026-03-04 15:13:43 +0800",
+          "message": "fix: use real alert IDs from API instead of mock data",
+          "filesChanged": 0
+        }
+      ]
+    }
+  ],
+  "lastUpdated": "2026-03-05T02:34:08.978Z",
+  "scanPath": "/Users/inman/Codes"
+}

@@ -1,0 +1,448 @@
+{
+  "date": "2026-03-07",
+  "generatedAt": "2026-03-07T02:32:27.661Z",
+  "projects": [
+    {
+      "name": "ai-middleware",
+      "path": "/Users/inman/Codes/gitee/ai-middleware",
+      "branch": "master",
+      "status": "clean",
+      "lastCommitTime": "2026-03-04 16:39:06 +0800",
+      "commits": [
+        {
+          "hash": "c3130f8",
+          "author": "fujianguo",
+          "date": "2026-03-06 12:57:32 +0800",
+          "message": "fix: 解决无法访问网络问题"
+        },
+        {
+          "hash": "8a6855f",
+          "author": "fujianguo",
+          "date": "2026-03-06 11:30:31 +0800",
+          "message": "feat: 子服务镜像大小优化&移除api-key接口内网限制"
+        },
+        {
+          "hash": "8470e42",
+          "author": "fujianguo",
+          "date": "2026-03-06 11:08:35 +0800",
+          "message": "feat:解决子服务镜像过大问题"
+        },
+        {
+          "hash": "a6d7b56",
+          "author": "fujianguo",
+          "date": "2026-03-06 10:57:32 +0800",
+          "message": "feat: 解决dns没有刷新访问服务失败的问题"
+        },
+        {
+          "hash": "19e3fc4",
+          "author": "fujianguo",
+          "date": "2026-03-06 10:19:41 +0800",
+          "message": "Merge branch 'master' of gitee.com:gaocang/ai-middleware"
+        },
+        {
+          "hash": "b0e3ec5",
+          "author": "fujianguo",
+          "date": "2026-03-05 16:47:04 +0800",
+          "message": "fix: 完整显示api key"
+        },
+        {
+          "hash": "3decd99",
+          "author": "fujianguo",
+          "date": "2026-03-05 16:14:33 +0800",
+          "message": "feat: 增加gateway内部签名说明"
+        },
+        {
+          "hash": "8aad2ab",
+          "author": "fujianguo",
+          "date": "2026-03-05 15:29:56 +0800",
+          "message": "feat: 项目管理支持内网查看与复制最新API Key"
+        },
+        {
+          "hash": "06acee7",
+          "author": "fujianguo",
+          "date": "2026-03-05 13:35:08 +0800",
+          "message": "feat: 完成接口优化"
+        },
+        {
+          "hash": "e0d131b",
+          "author": "fujianguo",
+          "date": "2026-03-05 10:20:08 +0800",
+          "message": "优化会话全历史拼接的缓存与增量回补"
+        }
+      ],
+      "fileChanges": [
+        {
+          "status": "M",
+          "file": "pp/api/admin/chat_logs.py"
+        },
+        {
+          "status": "M",
+          "file": "app/schemas/chat_log.py"
+        },
+        {
+          "status": "M",
+          "file": "app/services/write_service.py"
+        },
+        {
+          "status": "M",
+          "file": "web/src/services/api.ts"
+        }
+      ],
+      "stats": {
+        "commitsToday": 0,
+        "filesModified": 0,
+        "filesAdded": 0,
+        "filesDeleted": 0
+      }
+    },
+    {
+      "name": "code-server",
+      "path": "/Users/inman/Codes/older/code-server",
+      "branch": "user",
+      "status": "dirty",
+      "lastCommitTime": "2025-12-10 14:02:23 +0800",
+      "commits": [
+        {
+          "hash": "8e34573",
+          "author": "fujianguo",
+          "date": "2025-12-10 14:02:23 +0800",
+          "message": "优化代码"
+        },
+        {
+          "hash": "4d66564",
+          "author": "fujianguo",
+          "date": "2025-12-09 14:37:10 +0800",
+          "message": "优化代码"
+        },
+        {
+          "hash": "73296e5",
+          "author": "fujianguo",
+          "date": "2025-12-05 20:44:52 +0800",
+          "message": "完成优化"
+        },
+        {
+          "hash": "4f27e9f",
+          "author": "fujianguo",
+          "date": "2025-12-04 22:13:21 +0800",
+          "message": "完成游客优化"
+        },
+        {
+          "hash": "07dc110",
+          "author": "fujianguo",
+          "date": "2025-12-04 17:09:42 +0800",
+          "message": "优化代码"
+        },
+        {
+          "hash": "c29f936",
+          "author": "fujianguo",
+          "date": "2025-12-03 11:58:03 +0800",
+          "message": "增加健康检测接口"
+        },
+        {
+          "hash": "7502ae0",
+          "author": "fujianguo",
+          "date": "2025-12-03 11:35:38 +0800",
+          "message": "增加业务节点自动切换备用"
+        },
+        {
+          "hash": "ada51cd",
+          "author": "fujianguo",
+          "date": "2025-12-02 13:17:58 +0800",
+          "message": "优化"
+        },
+        {
+          "hash": "b612da5",
+          "author": "fujianguo",
+          "date": "2025-12-01 16:43:23 +0800",
+          "message": "支持获取alluser"
+        },
+        {
+          "hash": "5bb49b4",
+          "author": "fujianguo",
+          "date": "2025-12-01 12:28:51 +0800",
+          "message": "优化代码"
+        }
+      ],
+      "fileChanges": [
+        {
+          "status": "??",
+          "file": "go-app/"
+        }
+      ],
+      "stats": {
+        "commitsToday": 0,
+        "filesModified": 0,
+        "filesAdded": 0,
+        "filesDeleted": 0
+      }
+    },
+    {
+      "name": "go-todo-app",
+      "path": "/Users/inman/Codes/gitee/go-todo-app",
+      "branch": "main",
+      "status": "dirty",
+      "lastCommitTime": "2026-03-02 10:57:45 +0800",
+      "commits": [
+        {
+          "hash": "94bd194",
+          "author": "fujianguo",
+          "date": "2026-03-06 17:26:59 +0800",
+          "message": "fix: 解决请求测试页面错误鉴权传参的问题"
+        },
+        {
+          "hash": "8a16e11",
+          "author": "fujianguo",
+          "date": "2026-03-06 16:21:21 +0800",
+          "message": "fix: reset broken services/admin submodule pointer"
+        },
+        {
+          "hash": "9ac98a9",
+          "author": "fujianguo",
+          "date": "2026-03-06 16:12:12 +0800",
+          "message": "fix: reorder migration - create description column before using it"
+        },
+        {
+          "hash": "bf66afd",
+          "author": "fujianguo",
+          "date": "2026-03-06 16:00:23 +0800",
+          "message": "feat:项目配置&解决网购转发鉴权问题"
+        },
+        {
+          "hash": "c083757",
+          "author": "fujianguo",
+          "date": "2026-03-06 11:26:49 +0800",
+          "message": "fix: remove api-key internal ip limit"
+        },
+        {
+          "hash": "6fbebd5",
+          "author": "fujianguo",
+          "date": "2026-03-06 11:04:53 +0800",
+          "message": "fix: 解决内网错误问题"
+        },
+        {
+          "hash": "4fdaed3",
+          "author": "fujianguo",
+          "date": "2026-03-06 10:46:40 +0800",
+          "message": "deploy.sh脚本增加status命令"
+        },
+        {
+          "hash": "546386b",
+          "author": "fujianguo",
+          "date": "2026-03-06 10:09:19 +0800",
+          "message": "fix: authenticate github submodules in actions"
+        },
+        {
+          "hash": "b1bbb80",
+          "author": "fujianguo",
+          "date": "2026-03-06 09:45:31 +0800",
+          "message": "feat: 优化git仓库和gitall脚本"
+        },
+        {
+          "hash": "d38fedd",
+          "author": "fujianguo",
+          "date": "2026-03-06 09:12:47 +0800",
+          "message": "feat：优化请求测试页面"
+        }
+      ],
+      "fileChanges": [],
+      "stats": {
+        "commitsToday": 0,
+        "filesModified": 0,
+        "filesAdded": 0,
+        "filesDeleted": 0
+      }
+    },
+    {
+      "name": "login-page",
+      "path": "/Users/inman/Codes/github/login-page",
+      "branch": "main",
+      "status": "dirty",
+      "lastCommitTime": "2026-03-03 10:17:03 +0800",
+      "commits": [
+        {
+          "hash": "c350964",
+          "author": "fujianguo",
+          "date": "2026-03-03 10:17:03 +0800",
+          "message": "feat: redesign with clean tech style - light theme, glass morphism, blue accent"
+        },
+        {
+          "hash": "d3d31e1",
+          "author": "fujianguo",
+          "date": "2026-03-03 09:59:39 +0800",
+          "message": "feat: initial login page implementation"
+        }
+      ],
+      "fileChanges": [
+        {
+          "status": "D",
+          "file": "ist/assets/index-DfAubTRp.css"
+        },
+        {
+          "status": "D",
+          "file": "dist/assets/index-PPErvW3c.js"
+        },
+        {
+          "status": "D",
+          "file": "dist/assets/index-PPErvW3c.js.map"
+        },
+        {
+          "status": "M",
+          "file": "dist/index.html"
+        },
+        {
+          "status": "M",
+          "file": "src/App.tsx"
+        },
+        {
+          "status": "M",
+          "file": "src/components/LoginForm.tsx"
+        },
+        {
+          "status": "??",
+          "file": "dist/assets/index-BM4mroGs.js"
+        },
+        {
+          "status": "??",
+          "file": "dist/assets/index-BM4mroGs.js.map"
+        },
+        {
+          "status": "??",
+          "file": "dist/assets/index-C1MXTOUH.css"
+        }
+      ],
+      "stats": {
+        "commitsToday": 0,
+        "filesModified": 0,
+        "filesAdded": 0,
+        "filesDeleted": 0
+      }
+    },
+    {
+      "name": "product-showcase",
+      "path": "/Users/inman/Codes/github/product-showcase",
+      "branch": "main",
+      "status": "clean",
+      "lastCommitTime": "2026-02-27 16:48:56 +0800",
+      "commits": [
+        {
+          "hash": "83221fc",
+          "author": "fujianguo",
+          "date": "2026-02-27 16:48:56 +0800",
+          "message": "fix: 为访问计数 API 增加 CORS 支持"
+        },
+        {
+          "hash": "63f349e",
+          "author": "fujianguo",
+          "date": "2026-02-27 16:38:56 +0800",
+          "message": "feat: 页面显示 total_visits 计数"
+        },
+        {
+          "hash": "40231ff",
+          "author": "fujianguo",
+          "date": "2026-02-27 16:31:39 +0800",
+          "message": "ci: 拆分 Cloudflare 部署为双 Job"
+        },
+        {
+          "hash": "b2e392a",
+          "author": "fujianguo",
+          "date": "2026-02-27 15:57:56 +0800",
+          "message": "fix: 清理 wrangler 部署残留配置"
+        },
+        {
+          "hash": "2328019",
+          "author": "fujianguo",
+          "date": "2026-02-27 15:33:38 +0800",
+          "message": "fix: 修复 workflow 使用 variables"
+        },
+        {
+          "hash": "4c817cd",
+          "author": "fujianguo",
+          "date": "2026-02-27 15:26:31 +0800",
+          "message": "ci: 添加 GitHub Actions 自动部署 workflow"
+        },
+        {
+          "hash": "7282888",
+          "author": "fujianguo",
+          "date": "2026-02-27 15:20:14 +0800",
+          "message": "feat: 添加 Workers KV 访问计数器 demo"
+        },
+        {
+          "hash": "93868a7",
+          "author": "fujianguo",
+          "date": "2026-02-27 13:38:52 +0800",
+          "message": "Add Vite + React + TypeScript project with Tailwind CSS"
+        },
+        {
+          "hash": "d58a078",
+          "author": "fujianguo",
+          "date": "2026-02-27 13:37:22 +0800",
+          "message": "Initial commit"
+        }
+      ],
+      "fileChanges": [],
+      "stats": {
+        "commitsToday": 0,
+        "filesModified": 0,
+        "filesAdded": 0,
+        "filesDeleted": 0
+      }
+    },
+    {
+      "name": "web",
+      "path": "/Users/inman/Codes/project-monitor/web",
+      "branch": "main",
+      "status": "clean",
+      "lastCommitTime": "2026-03-04 21:44:28 +0800",
+      "commits": [
+        {
+          "hash": "004a034",
+          "author": "fujianguo",
+          "date": "2026-03-04 21:44:28 +0800",
+          "message": "fix: add defensive programming for API responses and component data access"
+        },
+        {
+          "hash": "191e805",
+          "author": "fujianguo",
+          "date": "2026-03-04 15:13:43 +0800",
+          "message": "fix: use real alert IDs from API instead of mock data"
+        }
+      ],
+      "fileChanges": [
+        {
+          "status": "M",
+          "file": "ackage-lock.json"
+        },
+        {
+          "status": "M",
+          "file": "package.json"
+        },
+        {
+          "status": "M",
+          "file": "src/pages/Alerts.tsx"
+        },
+        {
+          "status": "M",
+          "file": "src/pages/ProjectList.tsx"
+        },
+        {
+          "status": "M",
+          "file": "src/pages/ReportDetail.tsx"
+        },
+        {
+          "status": "M",
+          "file": "src/types/index.ts"
+        },
+        {
+          "status": "M",
+          "file": "tailwind.config.js"
+        }
+      ],
+      "stats": {
+        "commitsToday": 0,
+        "filesModified": 0,
+        "filesAdded": 0,
+        "filesDeleted": 0
+      }
+    }
+  ]
+}

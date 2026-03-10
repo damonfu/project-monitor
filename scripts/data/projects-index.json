@@ -1,0 +1,48 @@
+{
+  "projects": [
+    {
+      "name": "ai-middleware",
+      "path": "/Users/inman/Codes/gitee/ai-middleware",
+      "branch": "master",
+      "lastCommitTime": "2026-03-04 16:39:06 +0800",
+      "status": "clean"
+    },
+    {
+      "name": "code-server",
+      "path": "/Users/inman/Codes/older/code-server",
+      "branch": "user",
+      "lastCommitTime": "2025-12-10 14:02:23 +0800",
+      "status": "dirty"
+    },
+    {
+      "name": "go-todo-app",
+      "path": "/Users/inman/Codes/gitee/go-todo-app",
+      "branch": "main",
+      "lastCommitTime": "2026-03-02 10:57:45 +0800",
+      "status": "dirty"
+    },
+    {
+      "name": "login-page",
+      "path": "/Users/inman/Codes/github/login-page",
+      "branch": "main",
+      "lastCommitTime": "2026-03-03 10:17:03 +0800",
+      "status": "dirty"
+    },
+    {
+      "name": "product-showcase",
+      "path": "/Users/inman/Codes/github/product-showcase",
+      "branch": "main",
+      "lastCommitTime": "2026-02-27 16:48:56 +0800",
+      "status": "clean"
+    },
+    {
+      "name": "web",
+      "path": "/Users/inman/Codes/project-monitor/web",
+      "branch": "main",
+      "lastCommitTime": "2026-03-04 21:44:28 +0800",
+      "status": "clean"
+    }
+  ],
+  "lastUpdated": "2026-03-05T00:53:53.268Z",
+  "scanPath": "/Users/inman/Codes"
+}

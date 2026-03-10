@@ -1,0 +1,6 @@
+{
+  "apiUrl": "https://project-monitor-api.inmanfu.workers.dev",
+  "scanToken": "your-scan-token-here",
+  "feishuNotify": true,
+  "feishuWebhook": "https://open.feishu.cn/open-apis/bot/v2/hook/xxx-xxx-xxx"
+}
